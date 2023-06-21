@@ -23,7 +23,7 @@ from ietf.utils import log
 """
 This file contains policies regarding reviewer queues.
 The policies are documented in more detail on:
-https://trac.ietf.org/trac/ietfdb/wiki/ReviewerQueuePolicy
+https://github.com/ietf-tools/datatracker/wiki/ReviewerQueuePolicy
 Terminology used here should match terminology used in that document.
 """
 
@@ -183,9 +183,12 @@ class AbstractReviewerQueuePolicy:
             role__group=review_req.team
         ).exclude( person_id__in=rejecting_reviewer_ids )
 
-        one_assignment = (review_req.reviewassignment_set
-                          .exclude(state__slug__in=('rejected', 'no-response'))
-                          .first())
+        one_assignment = None
+        if review_req.pk is not None:
+            # cannot use reviewassignment_set relation until review_req has been created
+            one_assignment = (review_req.reviewassignment_set
+                              .exclude(state__slug__in=('rejected', 'no-response'))
+                              .first())
         if one_assignment:
             field.initial = one_assignment.reviewer_id
 
