@@ -58,6 +58,8 @@ Click the <kbd>Fork</kbd> button in the top-right corner of the repository to cr
 
 As outlined in the [Contributing](https://github.com/ietf-tools/.github/blob/main/CONTRIBUTING.md) guide, you will first want to create a fork of the datatracker project in your personal GitHub account before cloning it.
 
+Windows developers: [Start with WSL2 from the beginning](https://github.com/ietf-tools/.github/blob/main/docs/windows-dev.md).
+
 Because of the extensive history of this project, cloning the datatracker project locally can take a long time / disk space. You can speed up the cloning process by limiting the history depth, for example *(replace `USERNAME` with your GitHub username)*:
 
 - To fetch only up to the 10 latest commits:
@@ -81,7 +83,7 @@ If VS Code is not available to you, in your clone, type `cd docker; ./run`
 
 Once the containers are started, run the tests to make sure your checkout is a good place to start from (all tests should pass - if any fail, ask for help at tools-develop@). Inside the app container's shell type:
 ```sh
-ietf/manage.py test --settings=settings_postgrestest
+ietf/manage.py test --settings=settings_test
 ```
 
 Note that we recently moved the datatracker onto PostgreSQL - you may still find older documentation that suggests testing with settings_sqlitetest. That will no longer work.
@@ -226,7 +228,7 @@ before activating a new release.
 
 From a datatracker container, run the command:
 ```sh
-./ietf/manage.py test --settings=settings_postgrestest
+./ietf/manage.py test --settings=settings_test
 ```
 
 > You can limit the run to specific tests using the `--pattern` argument.
